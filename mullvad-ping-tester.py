@@ -20,7 +20,7 @@ def get_data(html):
     data = BeautifulSoup(html, "lxml")
     trs = data.find("table").find_all("tr")
     ips = []
-    for tr in trs:
+    for tr in trs[1:]:
         ip = tr.find("td").text
         ips.append(ip + ".mullvad.net")
     ips = ips[1:]
@@ -46,7 +46,7 @@ def ping(hosts):
         try:
             avg_ping_list.append(int(avg_ping[:-2]))
         except ValueError:
-            avg_ping_list.append(9999999999999)  # Server is DOWN. TODO
+            avg_ping_list.append(99999999999999999)  # Server is DOWN. TODO
     bar.finish()
     servers_pings = dict(zip(hosts, avg_ping_list))
     servers_pings_sorted = OrderedDict(sorted(
